@@ -1,0 +1,118 @@
+/* Fonts */
+@font-face {
+  font-family: "Yoster";
+  src: url( "/font/yoster.ttf" );
+ }
+
+
+/* Main CSS for page */
+  /*---------------*/
+body{
+  font-family: "Yoster", serif;
+  background-image: url("/img/ground-tiles/medievalTile_14.png");
+  background-position: right bottom, left top;
+  /* background-repeat: repeat, repeat; */
+
+}
+.mountains{
+  width: 608px;
+  height: 150px;
+  position: relative;
+  background:linear-gradient(to bottom, #3b679e 0%,#207cca 20%,#207cca 20%,#2b88d9 34%,#7db9e8 100%);}
+
+
+  .game{
+  width: 608px;
+  height: 416px;
+  position: relative;
+  background-color: forestgreen;
+  background-size:32px 32px; 
+  background-image: linear-gradient(to right, black 1px, transparent 1px), linear-gradient(to bottom, black 1px, transparent 1px);
+  /* background-image: url("/img/ground-tiles/medievalTile_57.png" ) */
+}
+
+.log{
+  width: 608px;
+  height: 115px;
+  position: relative;
+  background-image: url("/img/ground-tiles/medievalTile_01.png");
+  overflow-y: scroll;
+}
+#player {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  left: 576px;
+  top: 384px;
+
+  background-size: 200%;
+  background-position: center;
+  transition: all 50ms ease-in;
+}
+.male{
+  background-image: url("/img/players/male.png");
+}
+.female{
+  background-image: url("/img/players/female.png");
+}
+.btn{
+  background-image: url("/img/ground-tiles/medievalTile_01.png");
+  margin:10px;
+  
+}
+/* 
+ * TILES CLASSES
+ * ------------- 
+ */
+
+ /* .tile {
+  min-width: 5.26%;
+  min-height: 5.26%;
+  background-image: url("");
+  /* border: 1px solid black; 
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.rock {
+  background-image: url("");
+  background-position: center;
+  background-size: cover;
+}
+
+.unvisited {
+  background-image: url("");
+}
+
+.treasure {
+  background-image: url("");
+  background-position: center;
+  background-size: cover;
+}
+
+.oos {
+  background-image: url("./../images/ground/oos-ground.png");
+}
+
+.visited {
+  background-image: url("./../images/ground/ground.png");
+}
+
+.entrance {
+  background-image: url("./../images//ladders/ladder3.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.player {
+  background-image: url("./../images/dwarf/sprite-down.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.v-rock {
+  background-image: url("./../images/rock/v-rock.png");
+  background-position: center;
+  background-size: cover;
+}
+ */
