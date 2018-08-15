@@ -14,7 +14,7 @@
 //      G - grass
 
 
-
+var sorcererNames = ["Karl","Josef","Inigo","Lucius","Bafilda","Riddle"]  //Build a Sorcerer
 
 
 // Game
@@ -33,7 +33,7 @@ function Game() {
     ["T", "G", "R", "R", "T", "R", "G", "G", "G", "T", "G", "T", "G", "T", "G", "T", "R", "T", "G"],
     ["G", "G", "G", "G", "G", "T", "G", "T", "G", "G", "G", "T", "S", "G", "G", "T", "T", "G", "G"],
     ["R", "T", "G", "T", "G", "T", "G", "G", "W2", "G", "R", "R", "R", "R", "T", "G", "G", "G", "G"],
-    ["T", "G", "G", "G", "G", "G", "G", "R", "W", "G", "G", "R", "T", "M", "G", "G", "G", "R", "G"]
+    ["T", "G", "G", "G", "G", "G", "G", "R", "W", "G", "G", "R", "T", "M", "G", "G", "T", "R", "G"]
   ];
   this.player = {
     y: 8,
@@ -103,10 +103,12 @@ $(".music").on('click', function () {
 
 //Restart Game Button
 $(".restart").on('click', function () {
-  if (moveCounter < 0) {
-
-    location.reload();
-  };
+player = 0;
+player = new Game();
+updateBoard();
+  // if (moveCounter < 0) {
+  //   location.reload();
+  // };
 })
 
 
@@ -178,13 +180,54 @@ function cantRock() {
 function windmill() {
   $(".log").prepend('An old abandoned windmill sways mockingly in the breeze.<br><br>')
 }
+function windmill() {
+  $(".log").prepend('An old abandoned windmill sways mockingly in the breeze.<br><br>')
+}
+function victory() {
+  $(".log").prepend('A familiar smell fills your nose as your home comes into view. Dinner must be ready.<br><br>')
+}
+
 function fight() {
   $(".log").prepend('The local sorcerer eyes you mockingly.<br><br>')
-var john = new Sorcerer(getRandomInt(200),getRandomInt(200));
-tim.health
+var wizard = new Sorcerer(sorcererNames[getRandomInt(sorcererNames.length)],getRandomInt(200),getRandomInt(200));
+while (tim.health > 0 && wizard.health > 0) {
+        
+  wizard.health -= tim.strength;
+
+  if (wizard.health <= 0 ) {
+    $(".log").prepend('You win!<br><br>')
+    
+   player.clearBoard();
+  }
+  tim.health -= wizard.strength;
+   
+  if (tim.health <= 0) {
+    $(".log").prepend('You died!<br><br>')
+  }
+
+}
 }
 function magic() {
-  $(".log").prepend('Your body is imbued with a strange energy.You feel better than you have in ages.<br><br>')
+  tim.health +=50;
+  $(".log").prepend('Your body is imbued with a strange energy.Your health increases by 50!<br><br>')
+}
+
+
+//Board clear after fights
+////
+Game.prototype.clearBoard = function () {
+  if (this.board[this.player.y][this.player.x - 1] === "S") {
+    (this.board[this.player.y][this.player.x - 1] = "G")
+  }
+ else  if (this.board[this.player.y][this.player.x + 1] === "S") {
+    (this.board[this.player.y][this.player.x + 1] = "G")
+  }
+  else if (this.board[this.player.y-1][this.player.x] === "S") {
+    (this.board[this.player.y-1][this.player.x] = "G")
+  }
+  else if (this.board[this.player.y+1][this.player.x - 1] === "S") {
+    (this.board[this.player.y+1][this.player.x - 1] = "G")
+  }
 }
 // MOVEMENT CONTROLS
 
@@ -324,7 +367,7 @@ for (var i = 0; i < 13; i++) {
 
 function updateBoard() {
   $(".tile").removeClass("player male female");
-  
+
 
   for (var i = 0; i < 13; i++) {
     for (var j = 0; j < 19; j++) {

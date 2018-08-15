@@ -18,6 +18,8 @@ function Hero(name, health, strength) {
   this.name = name;     //to be asked for at beginning and used for death screens, etc
   this.health = health;
   this.strength = strength;
+  $('.h-health').append(this.health)
+  $('.h-strength').append(this.strength)
   this.receiveDamage = function (damage, enemy) {
     this.health = this.health - damage;
     if (this.health <= 0 && enemy === "sorcerer") {
@@ -53,10 +55,13 @@ Hero.prototype = Object.create(Animal.prototype);
 
 
 //Enemies
-function Sorcerer(health, strength) {
+function Sorcerer(name,health, strength) {
   Animal.call(this);
+  this.name=name;
   this.health = health;
   this.strength = strength;
+  $('.e-health').text("Health = "+this.health)
+  $('.e-strength').text("Strength = "+this.strength)
   this.receiveDamage = function (damage, enemy) {
     this.health = this.health - damage;
     if (this.health <= 0) {
