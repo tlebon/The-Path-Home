@@ -139,8 +139,8 @@ body{
  */
 
  .tile {
-  min-width: 5.26%;
-  min-height: 5.26%;
+  min-width: 32px;
+  min-height: 32px;
   background-image: url("./img/ground-tiles/medievalTile_57.png");
   /* border: 1px solid black; */
   box-sizing: border-box;
@@ -196,6 +196,7 @@ body{
   background-position: center;
   transition: all 50ms ease-in;
 }
+
 .log{
   width: 608px;
   height: 115px;
@@ -206,13 +207,13 @@ body{
 .player {
   width: 32px;
   height: 32px;
-  /* position: absolute; */
+ 
   /* left: 576px;
   top: 384px; */
-
+  /* background-image: url("./img/players/female.png"); */
   background-size: 200%;
   background-position: center;
-  transition: all 50ms ease-in;
+  transition: all 100ms ease-out;
 }
 .male{
   background-image: url("./img/players/male.png");

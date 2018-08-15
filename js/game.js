@@ -29,15 +29,15 @@ function Game() {
     ["G", "G", "R", "G", "G", "S", "G", "R", "G", "R", "G", "G", "G", "G", "R", "G", "G", "G", "G"],
     ["G", "T", "R", "R", "G", "R", "G", "G", "G", "G", "G", "R", "R", "G", "G", "G", "R", "T", "R"],
     ["G", "R", "G", "T", "T", "R", "G", "T", "R", "R", "S", "T", "R", "T", "T", "R", "T", "G", "R"],
-    ["R", "G", "G", "G", "M", "R", "G", "R", "G", "G", "G", "G", "G", "R", "G", "G", "G", "G", "P"],
-    ["T", "G", "R", "R", "R", "T", "G", "G", "G", "T", "G", "T", "G", "T", "G", "T", "T", "T", "G"],
+    ["R", "G", "G", "G", "M", "T", "G", "R", "G", "G", "G", "G", "G", "R", "G", "G", "G", "G", "P"],
+    ["T", "G", "R", "R", "T", "R", "G", "G", "G", "T", "G", "T", "G", "T", "G", "T", "R", "T", "G"],
     ["G", "G", "G", "G", "G", "T", "G", "T", "G", "G", "G", "T", "S", "G", "G", "T", "T", "G", "G"],
-    ["R", "T", "G", "T", "G", "T", "G", "G", "W2", "G", "R", "R", "R", "R", "R", "G", "G", "G", "G"],
-    ["T", "G", "G", "G", "G", "G", "G", "R", "W", "G", "G", "R", "T", "G", "G", "G", "G", "R", "G"]
+    ["R", "T", "G", "T", "G", "T", "G", "G", "W2", "G", "R", "R", "R", "R", "T", "G", "G", "G", "G"],
+    ["T", "G", "G", "G", "G", "G", "G", "R", "W", "G", "G", "R", "T", "M", "G", "G", "G", "R", "G"]
   ];
-  this.pGayer = {
-    y: 9,
-    x: 19,
+  this.player = {
+    y: 8,
+    x: 18,
   };
 
 
@@ -49,7 +49,7 @@ function Game() {
 };
 
 var player = new Game();
-
+var tim = new Hero("Tim", 200, 200);
 
 //Movement controls//
 
@@ -63,6 +63,7 @@ var player = new Game();
 
 // Gender button
 $(".gender").on('click', function () {
+  $("#player").toggleClass('male female')
   $(".player").toggleClass('male female')
   if ($(".player").hasClass('female')) {
     $(".log").prepend('You feel. . . lighter!<br><br>')
@@ -71,6 +72,19 @@ $(".gender").on('click', function () {
     $(".log").prepend('Your hair is blue now, shrug.<br><br>')
   }
 })
+
+
+
+// $(".gender").on('click', function () {
+//   $(".player").toggleClass('male female')
+//  if ($(".player").hasClass('female'))
+//   })
+//    $(".log").prepend('You feel. . . lighter!<br><br>')
+//  }
+//  else {
+//   $(".log").prepend('Your hair is blue now, shrug.<br><br>')
+//  }
+// })
 
 //Mute music button
 $(".music").on('click', function () {
@@ -140,33 +154,7 @@ $(window).on('keydown', function (evt) {
 })
 
 
-//Simple Movement continued
-// function movePlayer(direction) {
-//   switch (direction) {
-//     case 'left':
-//       leftPos -= 32;
-//       break;
-//     case 'up':
-//       topPos -= 32;
-//       break;
-//     case 'right':
-//       leftPos += 32;
-//       break;
-//     case 'down':
-//       topPos += 32;
-//       break;
-//   }
-//   if (leftPos < 0) leftPos = 0
-//   if (leftPos > 576) leftPos = 576
-//   if (topPos < 0) topPos = 0
-//   if (topPos > 384) topPos = 384
 
-//   $('#player').css({
-//     top: topPos + 'px',
-//     left: leftPos + 'px',
-//   })
-
-// }
 
 
 
@@ -192,8 +180,10 @@ function windmill() {
 }
 function fight() {
   $(".log").prepend('The local sorcerer eyes you mockingly.<br><br>')
+var john = new Sorcerer(getRandomInt(200),getRandomInt(200));
+tim.health
 }
-function magic(){
+function magic() {
   $(".log").prepend('Your body is imbued with a strange energy.You feel better than you have in ages.<br><br>')
 }
 // MOVEMENT CONTROLS
@@ -215,11 +205,11 @@ Game.prototype.moveUp = function () {
     fight();
 
   }
-  
+
   else {
     this.player.y = this.player.y - 1;
     this.board[this.player.y][this.player.x] = "P";
-    this.board[this.player.y - 1][this.player.x] = "G";
+    this.board[this.player.y + 1][this.player.x] = "G";
   }
   // $(".movements-left").text(moveCounter);
 }
@@ -245,7 +235,7 @@ Game.prototype.moveDown = function () {
   else {
     this.player.y = this.player.y + 1;
     this.board[this.player.y][this.player.x] = "P";
-    this.board[this.player.y + 1][this.player.x] = "G";
+    this.board[this.player.y - 1][this.player.x] = "G";
   }
   // $(".movements-left").text(moveCounter);
 }
@@ -253,11 +243,11 @@ Game.prototype.moveDown = function () {
 
 Game.prototype.moveLeft = function () {
   $(".player").css({ "background-image": "" });
-  
+
   if (this.player.x == 0) {
     victory();
   }
-  else if (this.board[this.player.y][this.player.x] === "R") {
+  else if (this.board[this.player.y][this.player.x - 1] === "R") {
     cantRock();
   }
   else if (this.board[this.player.y][this.player.x - 1] === "T") {
@@ -279,7 +269,7 @@ Game.prototype.moveLeft = function () {
   else {
     this.player.x = this.player.x - 1;
     this.board[this.player.y][this.player.x] = "P";
-    this.board[this.player.y][this.player.x - 1] = "G";
+    this.board[this.player.y][this.player.x + 1] = "G";
   }
   // $(".movements-left").text(moveCounter);
 }
@@ -309,7 +299,7 @@ Game.prototype.moveRight = function () {
   else {
     this.player.x = this.player.x + 1;
     this.board[this.player.y][this.player.x] = "P";
-    this.board[this.player.y][this.player.x + 1] = "G";
+    this.board[this.player.y][this.player.x - 1] = "G";
   }
   // $(".movements-left").text(moveCounter);
 }
@@ -333,14 +323,14 @@ for (var i = 0; i < 13; i++) {
 //////////////// GIVING TILES APPEARANCE /////////////////
 
 function updateBoard() {
-  $(".tile").removeClass("player");
-  // $(".tile").removeClass("unvisited");
+  $(".tile").removeClass("player male female");
+  
 
   for (var i = 0; i < 13; i++) {
     for (var j = 0; j < 19; j++) {
       if ((player.board[i][j] == "P")) {
-        $("#" + i + "-" + j).addClass("player");
-        $(".player").toggleClass("male");
+        $("#" + i + "-" + j).addClass("player female");
+        // $(".player").toggleClass("female male");
       }
       if (player.board[i][j] == "S") {
         $("#" + i + "-" + j).addClass("sorcerer");
@@ -358,7 +348,7 @@ function updateBoard() {
         $("#" + i + "-" + j).addClass("windmill");
       }
       if (player.board[i][j] == "W2") {
-        $("#" + i + "-" + j).toggleClass("windmill-two");
+        // $("#" + i + "-" + j).toggleClass("windmill-two");
       }
     }
   }

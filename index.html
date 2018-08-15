@@ -21,7 +21,11 @@
   </div>
   <div class="container-fluid">
     <div class="row">
-      <div class="enemy-info col-md-2">enemy info</div>
+      <div class="left-col col-md-2">
+        <div class="enemy-info">
+Current Enemy
+        </div>
+      </div>
       <div class="game-window col-md-8 ">
         <!-- game window currently 19x12 -->
         <div class="row mountains">game background
@@ -48,7 +52,7 @@
               </div>
             </div>
             <div class="cloud"></div>
-            
+
           </div>
           <!-- <img class="hills"src="/img/ground-tiles/mountain.png"> -->
         </div>
@@ -60,7 +64,10 @@
           <br>
         </div>
       </div>
-      <div class="player-info col-md-2">player info
+      <div class="rght-col col-md-2">
+        <div class="player-info">
+The Hero of Our Story
+        </div>
         <button class="btn gender">Swap Gender</button>
         <button class="btn">Reset Game</button>
         <button class="btn music">Turn Off Music</button>
@@ -70,8 +77,8 @@
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
-  <script src="./js/game.js"></script>
   <script src="./js/character.js"></script>
+  <script src="./js/game.js"></script>
 </body>
 
 </html>

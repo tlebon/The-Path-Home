@@ -20,7 +20,7 @@ function Hero(name, health, strength) {
   this.strength = strength;
   this.receiveDamage = function (damage, enemy) {
     this.health = this.health - damage;
-    if (this.health <= 0 && enemy === "skellos") {
+    if (this.health <= 0 && enemy === "sorcerer") {
       return this.name + " was killed by a wayward Skëllos";
     }
     if (this.health <= 0 && enemy === "wolf") {
@@ -32,7 +32,6 @@ function Hero(name, health, strength) {
     else {
       return this.name + " has received " + damage + " points of damage"
     }
-
   }
   this.eatFood = function (health, strength, foodtype) {
     this.health = this.health + health;
@@ -54,7 +53,7 @@ Hero.prototype = Object.create(Animal.prototype);
 
 
 //Enemies
-function Skellos(health, strength) {
+function Sorcerer(health, strength) {
   Animal.call(this);
   this.health = health;
   this.strength = strength;
@@ -70,7 +69,7 @@ function Skellos(health, strength) {
 
   }
 }
-Skellos.prototype = Object.create(Animal.prototype);
+Sorcerer.prototype = Object.create(Animal.prototype);
 
 
 
