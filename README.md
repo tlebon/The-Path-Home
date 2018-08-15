@@ -7,3 +7,8 @@ Your journeys into the east have taken you away from home. Now that your travels
 
 //
 Thanks for checking out my game! this is my first game for Ironhack, Im actually still working on it right now! I hope I finish it in time!
+
+
+
+Animated CSS mountain taken from Chris Allen's codepen https://codepen.io/Christopherallen/pen/Clajw.
+

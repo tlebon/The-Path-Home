@@ -13,7 +13,7 @@ function Animal(health, strength) {
 }
 
 //Player
-function Player(name, health, strength) {
+function Hero(name, health, strength) {
   Animal.call(this);
   this.name = name;     //to be asked for at beginning and used for death screens, etc
   this.health = health;
@@ -49,7 +49,7 @@ function Player(name, health, strength) {
   }
 
 }
-Player.prototype = Object.create(Animal.prototype);
+Hero.prototype = Object.create(Animal.prototype);
 
 
 
