@@ -195,7 +195,7 @@ function victory() {
 function realVictory() {
   $(".log").prepend('Home at Last! Your spouse hugs you enthusiasitcally<br><br>')
   // $("#" + 3 + "-" + 1).addClass("player male");
- 
+
 }
 
 function fight() {
@@ -206,36 +206,36 @@ function fight() {
     wizard.health -= tim.strength;
     tim.health -= wizard.strength;
     if (tim.health <= 0) {
-       $(".log").prepend('You died!<br><br>')
-     }
+      $(".log").prepend('You died!<br><br>')
+    }
     else if (wizard.health <= 0) {
       $(".log").prepend('You win!<br><br>')
       var timer = setTimeout(function () {
         player.clearBoard();
-        },50)
+      }, 50)
       // updateBoard();
     }
-    $('.h-health').html("Health = " + tim.health+ "<br>")
+    $('.h-health').html("Health = " + tim.health + "<br>")
     $('.h-strength').html("Strength= " + tim.strength)
   }
 }
 function magic() {
   tim.health += 50;
   $(".log").prepend('Your body is imbued with a strange energy.Your health increases by 50!<br><br>')
-  $('.h-health').html("Health = " + tim.health+ "<br>")
+  $('.h-health').html("Health = " + tim.health + "<br>")
   var timer = setTimeout(function () {
-  player.clearBoard();
-  },50)
+    player.clearBoard();
+  }, 50)
 
 }
 //Board clear after fights
 ////
 //need to figure out how to remove sorcerer class from tiles rather than simply changing the tile
 Game.prototype.clearBoard = function () {
-  if (this.board[this.player.y][this.player.x - 1] === "S" ||this.board[this.player.y][this.player.x - 1] === "M" ) {
+  if (this.board[this.player.y][this.player.x - 1] === "S" || this.board[this.player.y][this.player.x - 1] === "M") {
     (this.board[this.player.y][this.player.x - 1] = "G")
   }
-  else if (this.board[this.player.y][this.player.x + 1] === "S" || this.board[this.player.y][this.player.x + 1] === "M" ) {
+  else if (this.board[this.player.y][this.player.x + 1] === "S" || this.board[this.player.y][this.player.x + 1] === "M") {
     (this.board[this.player.y][this.player.x + 1] = "G")
   }
   else if (this.board[this.player.y - 1][this.player.x] === "S") {
@@ -305,11 +305,11 @@ Game.prototype.moveLeft = function () {
 
   if (this.player.x == 0) {
     victory();
-  
+
   }
-  if (this.player.x == 1 && (this.player.y ==5 || this.player.y ==4) &&
-  $("#" + 4 + "-" + 0).hasClass("homeTop") &&
-  $("#" + 5 + "-" + 0).hasClass("homeBottom")){
+  if (this.player.x == 1 && (this.player.y == 5 || this.player.y == 4) &&
+    $("#" + 4 + "-" + 0).hasClass("homeTop") &&
+    $("#" + 5 + "-" + 0).hasClass("homeBottom")) {
     realVictory();
   }
   else if (this.board[this.player.y][this.player.x - 1] === "R") {
@@ -416,8 +416,8 @@ function updateBoard() {
       if (player.board[i][j] == "W") {
         $("#" + i + "-" + j).addClass("windmill");
       }
-      if (player.board[i][j] == "W2") {
-        // $("#" + i + "-" + j).toggleClass("windmill-two");
+      if ($("#" + 8 + "-" + 18).hasClass("player") ){
+        $("#" + 11 + "-" + 8).addClass("windmill-two");
       }
     }
   }
