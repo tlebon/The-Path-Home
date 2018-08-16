@@ -1,7 +1,7 @@
 /* Fonts */
 @font-face {
   font-family: "Yoster";
-  src: url( "./font/yoster.ttf" );
+  src: url( "./font/yoster.ttf" ) format( "ttf" );
  }
 
 
