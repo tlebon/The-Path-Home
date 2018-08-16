@@ -1,14 +1,14 @@
 /* Fonts */
 @font-face {
   font-family: "Yoster";
-  src: url( "./font/yoster.ttf" ) format( "ttf" );
+  src: url( "./font/yoster.ttf" );
  }
 
 
 /* Main CSS for page */
   /*---------------*/
 body{
-  font-family: "Yoster", serif;
+  font-family: "Yoster";
   background-image: url("./img/ground-tiles/medievalTile_14.png");
   background-position: right bottom, left top;
   /* background-repeat: repeat, repeat; */
