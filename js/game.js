@@ -108,8 +108,11 @@ $(".restart").on('click', function () {
   // tim = 0;
   // tim = new Hero();   //hero doesnt reset properly
   location.reload();
-  updateBoard();
+  var timer = setTimeout(function () {
+    updateBoard();
   $(".log").html('Try again!<br><br>')
+  }, 300)
+ 
   // if (moveCounter < 0) {
   // };
 })
@@ -207,8 +210,11 @@ function fight() {
     wizard.health -= tim.strength;
     tim.health -= wizard.strength;
     if (tim.health <= 0) {
-      $(".log").prepend('You died!<br><br>')
-      death();
+      $(".log").html('You died!<br><br>')
+      var timer = setTimeout(function () {
+        death();
+      }, 300)
+      
     }
     else if (wizard.health <= 0) {
       $(".log").prepend('You win!<br><br>')
@@ -231,6 +237,17 @@ function magic() {
 
 }
 function death() {
+  $(".log").prepend('You feel dizzy and suddenly the ground comes up to meet your face<br><br>')
+  
+  var timer = setTimeout(function () {
+    $('body').html('')
+    $('body').css({background:'black'})
+    var timer = setTimeout(function () {
+      $('body').html('')
+      $('body').css({background:'black'})
+      location.reload();
+    }, 700)
+  }, 700)
   // player.player.x= player.player.x;
   // player.player.y=player.player.y;
   // if ($(window).on('keydown')){
@@ -415,6 +432,10 @@ function updateBoard() {
       if ((player.board[i][j] == "P")) {
         $("#" + i + "-" + j).addClass("player female");
         // $(".player").toggleClass("female male");
+      }
+      if ((player.board[i][j] == "F")) {
+        $("#" + i + "-" + j).addClass("player male"); 
+        $(".player").toggleClass("female male");
       }
       if (player.board[i][j] == "G") {
         $("#" + i + "-" + j).removeClass("sorcerer");
