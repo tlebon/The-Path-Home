@@ -103,14 +103,14 @@ $(".music").on('click', function () {
 
 //Restart Game Button
 $(".restart").on('click', function () {
-  player = 0;
-  player = new Game();
-  tim = 0;
-  tim = new Hero();   //hero doesnt reset properly
+  // player = 0;
+  // player = new Game();
+  // tim = 0;
+  // tim = new Hero();   //hero doesnt reset properly
+  location.reload();
   updateBoard();
   $(".log").html('Try again!<br><br>')
   // if (moveCounter < 0) {
-  //   location.reload();
   // };
 })
 
@@ -131,7 +131,7 @@ $(window).on('keydown', function (evt) {
     $("#11-8").removeClass("windmill-blades-two")
     $("#11-8").addClass("windmill-blades")
   }
-  event.preventDefault(evt)
+  // event.preventDefault(evt)
   switch (evt.which) {
     case 37:
       player.moveLeft();
@@ -181,10 +181,11 @@ function cantRock() {
 
 }
 function windmill() {
-  $(".log").prepend('An old abandoned windmill sways mockingly in the breeze.<br><br>')
-}
-function windmill() {
-  $(".log").prepend('An old abandoned windmill sways mockingly in the breeze.<br><br>')
+  tim.strength += 50;
+  $(".log").prepend('An old abandoned windmill sways idly in the breeze. You feel stronger!<br><br>')
+  $('.h-strength').html("Strength = " + tim.strength + "<br>")
+  player.clearBoard();
+
 }
 function victory() {
   $(".log").prepend('A familiar smell fills your nose as your home comes into view. Dinner must be ready.Hurry!<br><br>')
@@ -207,6 +208,7 @@ function fight() {
     tim.health -= wizard.strength;
     if (tim.health <= 0) {
       $(".log").prepend('You died!<br><br>')
+      death();
     }
     else if (wizard.health <= 0) {
       $(".log").prepend('You win!<br><br>')
@@ -228,9 +230,16 @@ function magic() {
   }, 50)
 
 }
-//Board clear after fights
+function death() {
+  // player.player.x= player.player.x;
+  // player.player.y=player.player.y;
+  // if ($(window).on('keydown')){
+  //   $(".log").prepend('Stop fighting it, this is the way of life.<br><br>')
+  // }
+}
+
+//Board clear after fights, etc
 ////
-//need to figure out how to remove sorcerer class from tiles rather than simply changing the tile
 Game.prototype.clearBoard = function () {
   if (this.board[this.player.y][this.player.x - 1] === "S" || this.board[this.player.y][this.player.x - 1] === "M") {
     (this.board[this.player.y][this.player.x - 1] = "G")
@@ -241,9 +250,19 @@ Game.prototype.clearBoard = function () {
   else if (this.board[this.player.y - 1][this.player.x] === "S") {
     (this.board[this.player.y - 1][this.player.x] = "G")
   }
+  else if (this.board[this.player.y][this.player.x - 1] === "W" || this.board[this.player.y][this.player.x - 1] === "W2") {
+    (this.board[this.player.y][this.player.x - 1] = "T")
+  }
+  else if (this.board[this.player.y][this.player.x + 1] === "W2") {
+    (this.board[this.player.y][this.player.x + 1] = "T")
+  }
+  else if (this.board[this.player.y + 1][this.player.x] === "W2") {
+    (this.board[this.player.y + 1][this.player.x] = "T")
+  }
   else if (this.board[this.player.y + 1][this.player.x] === "S") {
     (this.board[this.player.y + 1][this.player.x] = "G")
   }
+
 }
 // MOVEMENT CONTROLS
 
@@ -416,7 +435,7 @@ function updateBoard() {
       if (player.board[i][j] == "W") {
         $("#" + i + "-" + j).addClass("windmill");
       }
-      if ($("#" + 8 + "-" + 18).hasClass("player") ){
+      if ($("#" + 8 + "-" + 18).hasClass("player")) {
         $("#" + 11 + "-" + 8).addClass("windmill-two");
       }
     }
