@@ -14,7 +14,7 @@
 //      G - grass
 
 
-var sorcererNames = ["Karl","Josef","Inigo","Lucius","Bafilda","Riddle"]  //Build a Sorcerer
+var sorcererNames = ["Karl", "Josef", "Inigo", "Lucius", "Bafilda", "Riddle"]  //Build a Sorcerer
 
 
 // Game
@@ -25,8 +25,8 @@ function Game() {
     ["G", "G", "T", "R", "G", "G", "G", "T", "G", "T", "G", "G", "G", "G", "M", "T", "M", "G", "T"],
     ["R", "G", "G", "R", "T", "G", "G", "R", "G", "G", "R", "T", "G", "G", "R", "S", "R", "G", "R"],
     ["R", "G", "G", "G", "G", "T", "G", "G", "G", "R", "G", "G", "G", "T", "G", "G", "R", "G", "G"],
-    ["G", "G", "R", "G", "T", "T", "G", "G", "R", "T", "T", "T", "S", "R", "G", "G", "G", "G", "R"],
-    ["G", "G", "R", "G", "G", "S", "G", "R", "G", "R", "G", "G", "G", "G", "R", "G", "G", "G", "G"],
+    ["T", "G", "R", "G", "T", "T", "G", "G", "R", "T", "T", "T", "S", "R", "G", "G", "G", "G", "R"],
+    ["T", "G", "R", "G", "G", "S", "G", "R", "G", "R", "G", "G", "G", "G", "R", "G", "G", "G", "G"],
     ["G", "T", "R", "R", "G", "R", "G", "G", "G", "G", "G", "R", "R", "G", "G", "G", "R", "T", "R"],
     ["G", "R", "G", "T", "T", "R", "G", "T", "R", "R", "S", "T", "R", "T", "T", "R", "T", "G", "R"],
     ["R", "G", "G", "G", "M", "T", "G", "R", "G", "G", "G", "G", "G", "R", "G", "G", "G", "G", "P"],
@@ -72,7 +72,7 @@ $(".gender").on('click', function () {
     $(".log").prepend('Your hair is blue now, shrug.<br><br>')
   }
 })
-
+//currently not saving
 
 
 // $(".gender").on('click', function () {
@@ -103,9 +103,12 @@ $(".music").on('click', function () {
 
 //Restart Game Button
 $(".restart").on('click', function () {
-player = 0;
-player = new Game();
-updateBoard();
+  player = 0;
+  player = new Game();
+  tim = 0;
+  tim = new Hero();   //hero doesnt reset properly
+  updateBoard();
+  $(".log").html('Try again!<br><br>')
   // if (moveCounter < 0) {
   //   location.reload();
   // };
@@ -184,49 +187,62 @@ function windmill() {
   $(".log").prepend('An old abandoned windmill sways mockingly in the breeze.<br><br>')
 }
 function victory() {
-  $(".log").prepend('A familiar smell fills your nose as your home comes into view. Dinner must be ready.<br><br>')
+  $(".log").prepend('A familiar smell fills your nose as your home comes into view. Dinner must be ready.Hurry!<br><br>')
+  $("#" + 4 + "-" + 0).addClass("homeTop");
+  $("#" + 5 + "-" + 0).addClass("homeBottom");
+  player.player.x = 1;
+}
+function realVictory() {
+  $(".log").prepend('Home at Last! Your spouse hugs you enthusiasitcally<br><br>')
+  // $("#" + 3 + "-" + 1).addClass("player male");
+ 
 }
 
 function fight() {
-  $(".log").prepend('The local sorcerer eyes you mockingly.<br><br>')
-var wizard = new Sorcerer(sorcererNames[getRandomInt(sorcererNames.length)],getRandomInt(200),getRandomInt(200));
-while (tim.health > 0 && wizard.health > 0) {
-        
-  wizard.health -= tim.strength;
-
-  if (wizard.health <= 0 ) {
-    $(".log").prepend('You win!<br><br>')
-    
-   player.clearBoard();
+  var wizard = new Sorcerer(sorcererNames[getRandomInt(sorcererNames.length)], getRandomInt(250), getRandomInt(200));
+  $(".log").prepend('The sorcerer ' + wizard.name + ' eyes you mockingly.<br><br>')
+  $('.e-name').html(wizard.name)
+  while (tim.health > 0 && wizard.health > 0) {
+    wizard.health -= tim.strength;
+    tim.health -= wizard.strength;
+    if (tim.health <= 0) {
+       $(".log").prepend('You died!<br><br>')
+     }
+    else if (wizard.health <= 0) {
+      $(".log").prepend('You win!<br><br>')
+      var timer = setTimeout(function () {
+        player.clearBoard();
+        },50)
+      // updateBoard();
+    }
+    $('.h-health').html("Health = " + tim.health+ "<br>")
+    $('.h-strength').html("Strength= " + tim.strength)
   }
-  tim.health -= wizard.strength;
-   
-  if (tim.health <= 0) {
-    $(".log").prepend('You died!<br><br>')
-  }
-
-}
 }
 function magic() {
-  tim.health +=50;
+  tim.health += 50;
   $(".log").prepend('Your body is imbued with a strange energy.Your health increases by 50!<br><br>')
+  $('.h-health').html("Health = " + tim.health+ "<br>")
+  var timer = setTimeout(function () {
+  player.clearBoard();
+  },50)
+
 }
-
-
 //Board clear after fights
 ////
+//need to figure out how to remove sorcerer class from tiles rather than simply changing the tile
 Game.prototype.clearBoard = function () {
-  if (this.board[this.player.y][this.player.x - 1] === "S") {
+  if (this.board[this.player.y][this.player.x - 1] === "S" ||this.board[this.player.y][this.player.x - 1] === "M" ) {
     (this.board[this.player.y][this.player.x - 1] = "G")
   }
- else  if (this.board[this.player.y][this.player.x + 1] === "S") {
+  else if (this.board[this.player.y][this.player.x + 1] === "S" || this.board[this.player.y][this.player.x + 1] === "M" ) {
     (this.board[this.player.y][this.player.x + 1] = "G")
   }
-  else if (this.board[this.player.y-1][this.player.x] === "S") {
-    (this.board[this.player.y-1][this.player.x] = "G")
+  else if (this.board[this.player.y - 1][this.player.x] === "S") {
+    (this.board[this.player.y - 1][this.player.x] = "G")
   }
-  else if (this.board[this.player.y+1][this.player.x - 1] === "S") {
-    (this.board[this.player.y+1][this.player.x - 1] = "G")
+  else if (this.board[this.player.y + 1][this.player.x] === "S") {
+    (this.board[this.player.y + 1][this.player.x] = "G")
   }
 }
 // MOVEMENT CONTROLS
@@ -289,6 +305,12 @@ Game.prototype.moveLeft = function () {
 
   if (this.player.x == 0) {
     victory();
+  
+  }
+  if (this.player.x == 1 && (this.player.y ==5 || this.player.y ==4) &&
+  $("#" + 4 + "-" + 0).hasClass("homeTop") &&
+  $("#" + 5 + "-" + 0).hasClass("homeBottom")){
+    realVictory();
   }
   else if (this.board[this.player.y][this.player.x - 1] === "R") {
     cantRock();
@@ -374,6 +396,10 @@ function updateBoard() {
       if ((player.board[i][j] == "P")) {
         $("#" + i + "-" + j).addClass("player female");
         // $(".player").toggleClass("female male");
+      }
+      if (player.board[i][j] == "G") {
+        $("#" + i + "-" + j).removeClass("sorcerer");
+        $("#" + i + "-" + j).removeClass("magical-pillar");
       }
       if (player.board[i][j] == "S") {
         $("#" + i + "-" + j).addClass("sorcerer");

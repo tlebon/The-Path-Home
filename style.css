@@ -194,8 +194,21 @@ body{
   background-size: cover;
   background-size: 200%;
   background-position: center;
-  transition: all 50ms ease-in;
+  transition: all 50ms linear;
 }
+.homeTop{
+  background-image: url("./img/ground-tiles/homeTop.png"), url("./img/ground-tiles/medievalTile_57.png");
+  background-position: center;
+  background-size: cover;
+  /* background-size:120 */
+}
+.homeBottom{
+  background-image: url("./img/ground-tiles/homeBottom.png"), url("./img/ground-tiles/medievalTile_57.png");
+  background-position: center;
+  background-size: cover;
+  /* background-size:120% */
+}
+
 
 .log{
   width: 608px;
