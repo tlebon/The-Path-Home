@@ -13,7 +13,7 @@
 //      B - boss        // only one on the board
 //      G - grass
 
-
+location.reload();
 var sorcererNames = ["Karl", "Josef", "Inigo", "Lucius", "Bafilda", "Riddle"]  //Build a Sorcerer
 
 
@@ -213,31 +213,31 @@ function fight() {
   $(".log").prepend('The sorcerer ' + wizard.name + ' eyes you mockingly.<br><br>')
   $('.e-name').html(wizard.name)
   lockout = true;
-  var currentHealth =tim.health;
+  var currentHealth = tim.health;
   var fighting = setTimeout(function () {
-    
+
     while (tim.health > 0 && wizard.health > 0) {
       wizard.health -= tim.strength;
       tim.health -= wizard.strength;
       if (tim.health <= 0) {
         $(".log").html('You died!<br><br>')
-      var timer = setTimeout(function () {
-        death();
-      }, 700)
-      
+        var timer = setTimeout(function () {
+          death();
+        }, 700)
+
+      }
+      else if (wizard.health <= 0) {
+        $(".log").prepend('You survive but take ' + (currentHealth - tim.health) + ' damage!<br><br>')
+        var timer = setTimeout(function () {
+          player.clearBoard();
+          lockout = false;
+        }, 200)
+        // updateBoard();
+      }
+      $('.h-health').html("Health = " + tim.health + "<br>")
+      $('.h-strength').html("Strength= " + tim.strength)
     }
-    else if (wizard.health <= 0) {
-      $(".log").prepend('You survive but take '+(currentHealth-tim.health) +' damage!<br><br>')
-      var timer = setTimeout(function () {
-        player.clearBoard();
-        lockout = false;
-      }, 200)
-      // updateBoard();
-    }
-    $('.h-health').html("Health = " + tim.health + "<br>")
-    $('.h-strength').html("Strength= " + tim.strength)
-  }
-}, 500)
+  }, 500)
 }
 function finalFight() {
   var wizard = new Sorcerer("Xol", 100 + getRandomInt(100), 100 + getRandomInt(100));
@@ -245,7 +245,7 @@ function finalFight() {
   $('.e-name').html(wizard.name)
   lockout = true;
   var fighting = setTimeout(function () {
-    
+
     while (tim.health > 0 && wizard.health > 0) {
       wizard.health -= tim.strength;
       tim.health -= wizard.strength;
@@ -254,7 +254,7 @@ function finalFight() {
         var lose = setTimeout(function () {
           death();
         }, 800)
-        
+
       }
       else if (wizard.health <= 0) {
         $(".log").prepend('Xol bows to his new master!<br><br>')
@@ -299,7 +299,7 @@ function death() {
 //Board clear after fights, etc
 ////
 Game.prototype.clearBoard = function () {
-  if (this.board[this.player.y][this.player.x - 1] === "S" || this.board[this.player.y][this.player.x - 1] === "M" || this.board[this.player.y][this.player.x-1]==="X") {
+  if (this.board[this.player.y][this.player.x - 1] === "S" || this.board[this.player.y][this.player.x - 1] === "M" || this.board[this.player.y][this.player.x - 1] === "X") {
     (this.board[this.player.y][this.player.x - 1] = "G")
   }
   else if (this.board[this.player.y][this.player.x + 1] === "S" || this.board[this.player.y][this.player.x + 1] === "M") {
