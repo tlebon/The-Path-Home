@@ -200,10 +200,11 @@ function realVictory() {
   $("#" + 3 + "-" + 1).toggleClass(" tile player male");
   var timer = setTimeout(function () {
     $(".log").prepend('Thanks for Playing!<br><br>')
-  }, 2000)
-  var timer = setTimeout(function () {
+  }, 4000)
+  var credits = setTimeout(function () {
+    $(".log").prepend('Bye!<br><br>')
     location.reload();
-  }, 20000)
+  }, 25000)
 
 }
 
@@ -230,7 +231,7 @@ function fight() {
       var timer = setTimeout(function () {
         player.clearBoard();
         lockout = false;
-      }, 50)
+      }, 200)
       // updateBoard();
     }
     $('.h-health').html("Health = " + tim.health + "<br>")
@@ -249,10 +250,10 @@ function finalFight() {
       wizard.health -= tim.strength;
       tim.health -= wizard.strength;
       if (tim.health <= 0) {
-        $(".log").prepend('A menacing laugh is the last you hear.<br><br>')
+        $(".log").html('A menacing laugh is the last you hear.<br><br>')
         var lose = setTimeout(function () {
           death();
-        }, 1500)
+        }, 800)
         
       }
       else if (wizard.health <= 0) {
