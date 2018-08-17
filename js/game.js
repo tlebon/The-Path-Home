@@ -103,12 +103,12 @@ $(".music").on('click', function () {
 
 //Restart Game Button
 $(".restart").on('click', function () {
+  $(".log").html('Try again!<br><br>')
 
-  location.reload();
   var timer = setTimeout(function () {
+    location.reload();
     updateBoard();
-    $(".log").html('Try again!<br><br>')
-  }, 300)
+  }, 600)
 
 
 })
@@ -153,7 +153,7 @@ $(window).on('keydown', function (evt) {
       break;
   }
   updateBoard();
-  countdown();
+  // countdown();
 
 })
 
@@ -193,7 +193,7 @@ function victory() {
   // player.player.x = 1;
 }
 function realVictory() {
-  $(".log").prepend('Home at Last! Your spouse hugs you enthusiastically<br><br><br><br><br>')
+  $(".log").html('Home at Last! Your spouse hugs you enthusiastically')
   lockout = true;
   $(".audio-one audio").prop('muted', true)
   $(".audio-two audio").prop('muted', false)
@@ -201,6 +201,9 @@ function realVictory() {
   var timer = setTimeout(function () {
     $(".log").prepend('Thanks for Playing!<br><br>')
   }, 2000)
+  var timer = setTimeout(function () {
+    location.reload();
+  }, 20000)
 
 }
 
@@ -208,10 +211,11 @@ function fight() {
   var wizard = new Sorcerer(sorcererNames[getRandomInt(sorcererNames.length)], 50 + getRandomInt(100), 50 + getRandomInt(50));
   $(".log").prepend('The sorcerer ' + wizard.name + ' eyes you mockingly.<br><br>')
   $('.e-name').html(wizard.name)
+  lockout = true;
+  var currentHealth =tim.health;
   var fighting = setTimeout(function () {
     
     while (tim.health > 0 && wizard.health > 0) {
-      lockout = true;
       wizard.health -= tim.strength;
       tim.health -= wizard.strength;
       if (tim.health <= 0) {
@@ -222,7 +226,7 @@ function fight() {
       
     }
     else if (wizard.health <= 0) {
-      $(".log").prepend('You win!<br><br>')
+      $(".log").prepend('You survive but take '+(currentHealth-tim.health) +' damage!<br><br>')
       var timer = setTimeout(function () {
         player.clearBoard();
         lockout = false;
@@ -238,17 +242,17 @@ function finalFight() {
   var wizard = new Sorcerer("Xol", 100 + getRandomInt(100), 100 + getRandomInt(100));
   $(".log").prepend('The Grand sorcerer ' + wizard.name + ' foretells your doom.<br><br>')
   $('.e-name').html(wizard.name)
+  lockout = true;
   var fighting = setTimeout(function () {
     
     while (tim.health > 0 && wizard.health > 0) {
-      lockout = true;
       wizard.health -= tim.strength;
       tim.health -= wizard.strength;
       if (tim.health <= 0) {
-        $(".log").html('A menacing laugh is the last you hear.<br><br>')
+        $(".log").prepend('A menacing laugh is the last you hear.<br><br>')
         var lose = setTimeout(function () {
           death();
-        }, 700)
+        }, 1500)
         
       }
       else if (wizard.health <= 0) {
@@ -262,7 +266,7 @@ function finalFight() {
       $('.h-health').html("Health = " + tim.health + "<br>")
       $('.h-strength').html("Strength= " + tim.strength)
     }
-  }, 500)
+  }, 1000)
 }
 function magic() {
   tim.health += 50;
@@ -274,7 +278,7 @@ function magic() {
 
 }
 function death() {
-  $(".log").prepend('You feel dizzy and suddenly the ground comes up to meet your face<br><br>')
+  $(".log").html('You feel dizzy and suddenly the ground comes up to meet your face<br><br>')
   $("audio").prop('muted', true)
 
   var timer = setTimeout(function () {
