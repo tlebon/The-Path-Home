@@ -13,7 +13,7 @@
 //      B - boss        // only one on the board
 //      G - grass
 
-location.reload();
+
 var sorcererNames = ["Karl", "Josef", "Inigo", "Lucius", "Bafilda", "Riddle"]  //Build a Sorcerer
 
 
@@ -165,9 +165,9 @@ $(window).on('keydown', function (evt) {
 ////
 ///RESPONSE FUNCTIONS////
 /////
-function countdown() {
+// function countdown() {
+// }
 
-}
 function cantGo() {
   $(".log").prepend('To go any further in this direction would be to court madness.<br><br>')
 }
@@ -289,11 +289,6 @@ function death() {
       location.reload();
     }, 500)
   }, 2000)
-  // player.player.x= player.player.x;
-  // player.player.y=player.player.y;
-  // if ($(window).on('keydown')){
-  //   $(".log").prepend('Stop fighting it, this is the way of life.<br><br>')
-  // }
 }
 
 //Board clear after fights, etc
@@ -320,10 +315,10 @@ Game.prototype.clearBoard = function () {
   else if (this.board[this.player.y + 1][this.player.x] === "S") {
     (this.board[this.player.y + 1][this.player.x] = "G")
   }
-
 }
-// MOVEMENT CONTROLS
 
+
+// MOVEMENT CONTROLS
 Game.prototype.moveUp = function () {
   $(".player").css({ "background-image": "" });
 
@@ -350,7 +345,6 @@ Game.prototype.moveUp = function () {
     this.board[this.player.y][this.player.x] = "P";
     this.board[this.player.y + 1][this.player.x] = "G";
   }
-  // $(".movements-left").text(moveCounter);
 }
 
 
@@ -379,7 +373,6 @@ Game.prototype.moveDown = function () {
     this.board[this.player.y][this.player.x] = "P";
     this.board[this.player.y - 1][this.player.x] = "G";
   }
-  // $(".movements-left").text(moveCounter);
 }
 
 
@@ -424,7 +417,6 @@ Game.prototype.moveLeft = function () {
     this.board[this.player.y][this.player.x] = "P";
     this.board[this.player.y][this.player.x + 1] = "G";
   }
-  // $(".movements-left").text(moveCounter);
 }
 
 
@@ -457,12 +449,10 @@ Game.prototype.moveRight = function () {
     this.board[this.player.y][this.player.x] = "P";
     this.board[this.player.y][this.player.x - 1] = "G";
   }
-  // $(".movements-left").text(moveCounter);
 }
 
 
 
-//////////////////////////////////////////////////////////
 //////////////// CREATING GAME BOARD DIVS ////////////////
 
 for (var i = 0; i < 13; i++) {
@@ -473,9 +463,6 @@ for (var i = 0; i < 13; i++) {
 }
 
 
-
-
-//////////////////////////////////////////////////////////
 //////////////// GIVING TILES APPEARANCE /////////////////
 
 function updateBoard() {
@@ -489,7 +476,7 @@ function updateBoard() {
         // $(".player").toggleClass("female male");
       }
       if ((player.board[i][j] == "F")) {
-        $("#" + i + "-" + j).addClass("player male");
+        $("#" + i + "-" + j).addClass("player male");  //unused, meant for gender button
         $(".player").toggleClass("female male");
       }
       if (player.board[i][j] == "G") {
@@ -527,9 +514,8 @@ updateBoard();
 //change the sky color as the character travels across the board
 function updateSky() {
   $(".mountains").css({ background: "linear-gradient(to bottom, #ff7f04 23%,#ffb76b 61%)" })
-
 }
-
+//unused currently!
 
 
 function getRandomColorString() {
