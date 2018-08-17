@@ -14,67 +14,71 @@
 <body>
   <div class="header container-fluid">
     <div class="audio-one">
-    <audio autoplay loop>
-      <source src="./music/Fantasy Game Loop.wav" type="audio/wav">
-    </audio>
-  </div>
-  <div class="audio-two">
+      <audio autoplay loop>
+        <source src="./music/Fantasy Game Loop.wav" type="audio/wav">
+      </audio>
+    </div>
+    <div class="audio-two">
       <audio autoplay loop muted>
-          <source src="./music/Tbone and friends.wav" type="audio/wav">
+        <source src="./music/Tbone and friends.wav" type="audio/wav">
       </audio>
     </div>
     <div class="h1 text-center">
       The Path Home</div>
   </div>
-  <div class="container-fluid">
+  <div class="container">
+    <div class="game-window col-md-8 col-md-push-2">
+      <!-- game window currently 19x12 -->
+      <div class="row mountains">game background
+        <div class="bg">
+          <div class="mountain">
+            <div class="mountain-top">
+              <div class="mountain-cap-1"></div>
+              <div class="mountain-cap-2"></div>
+              <div class="mountain-cap-3"></div>
+            </div>
+          </div>
+          <div class="mountain-two">
+            <div class="mountain-top">
+              <div class="mountain-cap-1"></div>
+              <div class="mountain-cap-2"></div>
+              <div class="mountain-cap-3"></div>
+            </div>
+          </div>
+          <div class="mountain-three">
+            <div class="mountain-top">
+              <div class="mountain-cap-1"></div>
+              <div class="mountain-cap-2"></div>
+              <div class="mountain-cap-3"></div>
+            </div>
+          </div>
+          <div class="cloud"></div>
+
+        </div>
+        <!-- <img class="hills"src="/img/ground-tiles/mountain.png"> -->
+      </div>
+      <div class="row game">
+        <div id="player" class="female"></div>
+      </div>
+      <div class="row log ">You must get back home! Use your arrow keys to travel West. Be careful!
+        <br>
+        <br> Look for secrets!
+        <br>
+        <br>
+      </div>
+    </div>
     <div class="row">
-      <div class="left-col col-md-2">
+      <div class="left-col col-md-2 col-md-pull-8">
         <div class="enemy-info btn">
           <span class="e-name">Current Enemy</span>
           <br>
-          <span class="e-health">Health = ??<br></span>
+          <span class="e-health">Health = ??
+            <br>
+          </span>
           <span class="e-strength">Strength = ??</span>
         </div>
       </div>
-      <div class="game-window col-md-8 ">
-        <!-- game window currently 19x12 -->
-        <div class="row mountains">game background
-          <div class="bg">
-            <div class="mountain">
-              <div class="mountain-top">
-                <div class="mountain-cap-1"></div>
-                <div class="mountain-cap-2"></div>
-                <div class="mountain-cap-3"></div>
-              </div>
-            </div>
-            <div class="mountain-two">
-              <div class="mountain-top">
-                <div class="mountain-cap-1"></div>
-                <div class="mountain-cap-2"></div>
-                <div class="mountain-cap-3"></div>
-              </div>
-            </div>
-            <div class="mountain-three">
-              <div class="mountain-top">
-                <div class="mountain-cap-1"></div>
-                <div class="mountain-cap-2"></div>
-                <div class="mountain-cap-3"></div>
-              </div>
-            </div>
-            <div class="cloud"></div>
-
-          </div>
-          <!-- <img class="hills"src="/img/ground-tiles/mountain.png"> -->
-        </div>
-        <div class="row game">
-          <div id="player" class="female"></div>
-        </div>
-        <div class="row log">You must get back home! Use your arrow keys to travel West. Be careful!<br><br> Look for secrets!
-          <br>
-          <br>
-        </div>
-      </div>
-      <div class="rght-col col-md-2">
+      <div class="rght-col col-md-2 ">
         <div class="player-info btn">
           The Hero
           <br>
