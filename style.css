@@ -196,6 +196,14 @@ body{
   background-position: center;
   transition: all 50ms linear;
 }
+.xol{
+  background-image: url("./img/ground-tiles/xol.png"), url("./img/ground-tiles/medievalTile_57.png");
+  background-position: center;
+  background-size: cover;
+  background-size: 200%;
+  background-position: center;
+  transition: all 50ms linear;
+}
 .homeTop{
   background-image: url("./img/ground-tiles/homeTop.png"), url("./img/ground-tiles/medievalTile_57.png");
   background-position: center;
@@ -229,7 +237,7 @@ body{
   /* background-image: url("./img/players/female.png"); */
   background-size: 200%;
   background-position: center;
-  transition: all 100ms ease-out;
+  /* transition: all 100ms ease-out; */
 }
 .male{
   background-image: url("./img/players/male.png");

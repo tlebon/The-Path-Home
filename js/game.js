@@ -26,7 +26,7 @@ function Game() {
     ["R", "G", "G", "R", "T", "G", "G", "R", "G", "G", "R", "T", "G", "G", "R", "G", "R", "G", "R"],
     ["R", "G", "G", "G", "G", "T", "G", "G", "G", "R", "G", "G", "G", "T", "G", "G", "R", "G", "G"],
     ["T", "G", "R", "G", "T", "T", "G", "G", "R", "T", "T", "T", "S", "R", "G", "S", "G", "G", "R"],
-    ["T", "G", "R", "G", "G", "S", "G", "R", "G", "R", "G", "G", "G", "G", "R", "G", "G", "G", "G"],
+    ["T", "G", "R", "G", "G", "X", "G", "R", "G", "R", "G", "G", "G", "G", "R", "G", "G", "G", "G"],
     ["G", "T", "R", "R", "G", "R", "G", "G", "G", "G", "G", "R", "R", "G", "G", "G", "R", "T", "R"],
     ["G", "R", "G", "T", "T", "R", "G", "T", "R", "R", "S", "T", "R", "T", "T", "R", "T", "G", "R"],
     ["R", "G", "G", "G", "M", "T", "G", "R", "G", "G", "G", "G", "G", "R", "G", "G", "G", "G", "P"],
@@ -193,7 +193,7 @@ function victory() {
   // player.player.x = 1;
 }
 function realVictory() {
-  $(".log").prepend('Home at Last! Your spouse hugs you enthusiastically<br><br><br><br>')
+  $(".log").prepend('Home at Last! Your spouse hugs you enthusiastically<br><br><br><br><br>')
   lockout = true;
   $(".audio-one audio").prop('muted', true)
   $(".audio-two audio").prop('muted', false)
@@ -205,19 +205,21 @@ function realVictory() {
 }
 
 function fight() {
-  var wizard = new Sorcerer(sorcererNames[getRandomInt(sorcererNames.length)], 50 + getRandomInt(100), 50 + getRandomInt(100));
+  var wizard = new Sorcerer(sorcererNames[getRandomInt(sorcererNames.length)], 50 + getRandomInt(100), 50 + getRandomInt(50));
   $(".log").prepend('The sorcerer ' + wizard.name + ' eyes you mockingly.<br><br>')
   $('.e-name').html(wizard.name)
-  while (tim.health > 0 && wizard.health > 0) {
-    lockout = true;
-    wizard.health -= tim.strength;
-    tim.health -= wizard.strength;
-    if (tim.health <= 0) {
-      $(".log").html('You died!<br><br>')
+  var fighting = setTimeout(function () {
+    
+    while (tim.health > 0 && wizard.health > 0) {
+      lockout = true;
+      wizard.health -= tim.strength;
+      tim.health -= wizard.strength;
+      if (tim.health <= 0) {
+        $(".log").html('You died!<br><br>')
       var timer = setTimeout(function () {
         death();
       }, 700)
-
+      
     }
     else if (wizard.health <= 0) {
       $(".log").prepend('You win!<br><br>')
@@ -230,6 +232,37 @@ function fight() {
     $('.h-health').html("Health = " + tim.health + "<br>")
     $('.h-strength').html("Strength= " + tim.strength)
   }
+}, 500)
+}
+function finalFight() {
+  var wizard = new Sorcerer("Xol", 100 + getRandomInt(100), 100 + getRandomInt(100));
+  $(".log").prepend('The Grand sorcerer ' + wizard.name + ' foretells your doom.<br><br>')
+  $('.e-name').html(wizard.name)
+  var fighting = setTimeout(function () {
+    
+    while (tim.health > 0 && wizard.health > 0) {
+      lockout = true;
+      wizard.health -= tim.strength;
+      tim.health -= wizard.strength;
+      if (tim.health <= 0) {
+        $(".log").html('A menacing laugh is the last you hear.<br><br>')
+        var lose = setTimeout(function () {
+          death();
+        }, 700)
+        
+      }
+      else if (wizard.health <= 0) {
+        $(".log").prepend('Xol bows to his new master!<br><br>')
+        var win = setTimeout(function () {
+          player.clearBoard();
+          lockout = false;
+        }, 500)
+        // updateBoard();
+      }
+      $('.h-health').html("Health = " + tim.health + "<br>")
+      $('.h-strength').html("Strength= " + tim.strength)
+    }
+  }, 500)
 }
 function magic() {
   tim.health += 50;
@@ -261,7 +294,7 @@ function death() {
 //Board clear after fights, etc
 ////
 Game.prototype.clearBoard = function () {
-  if (this.board[this.player.y][this.player.x - 1] === "S" || this.board[this.player.y][this.player.x - 1] === "M") {
+  if (this.board[this.player.y][this.player.x - 1] === "S" || this.board[this.player.y][this.player.x - 1] === "M" || this.board[this.player.y][this.player.x-1]==="X") {
     (this.board[this.player.y][this.player.x - 1] = "G")
   }
   else if (this.board[this.player.y][this.player.x + 1] === "S" || this.board[this.player.y][this.player.x + 1] === "M") {
@@ -365,6 +398,9 @@ Game.prototype.moveLeft = function () {
   else if (this.board[this.player.y][this.player.x - 1] === "T") {
     cantTree();
   }
+  else if (this.board[this.player.y][this.player.x - 1] === "X") {
+    finalFight();
+  }
   else if (this.board[this.player.y][this.player.x - 1] === "S") {
     fight();
   }
@@ -454,9 +490,13 @@ function updateBoard() {
       if (player.board[i][j] == "G") {
         $("#" + i + "-" + j).removeClass("sorcerer");
         $("#" + i + "-" + j).removeClass("magical-pillar");
+        $("#" + i + "-" + j).removeClass("xol");
       }
       if (player.board[i][j] == "S") {
         $("#" + i + "-" + j).addClass("sorcerer");
+      }
+      if (player.board[i][j] == "X") {
+        $("#" + i + "-" + j).addClass("xol");
       }
       if (player.board[i][j] == "R") {
         $("#" + i + "-" + j).addClass("rock");
