@@ -23,9 +23,9 @@ function Game() {
   this.board = [
     ["G", "T", "R", "R", "R", "T", "G", "G", "T", "R", "R", "R", "T", "R", "R", "R", "R", "R", "T"],
     ["G", "G", "T", "R", "G", "G", "G", "T", "G", "T", "G", "G", "G", "G", "M", "T", "M", "G", "T"],
-    ["R", "G", "G", "R", "T", "G", "G", "R", "G", "G", "R", "T", "G", "G", "R", "S", "R", "G", "R"],
+    ["R", "G", "G", "R", "T", "G", "G", "R", "G", "G", "R", "T", "G", "G", "R", "G", "R", "G", "R"],
     ["R", "G", "G", "G", "G", "T", "G", "G", "G", "R", "G", "G", "G", "T", "G", "G", "R", "G", "G"],
-    ["T", "G", "R", "G", "T", "T", "G", "G", "R", "T", "T", "T", "S", "R", "G", "G", "G", "G", "R"],
+    ["T", "G", "R", "G", "T", "T", "G", "G", "R", "T", "T", "T", "S", "R", "G", "S", "G", "G", "R"],
     ["T", "G", "R", "G", "G", "S", "G", "R", "G", "R", "G", "G", "G", "G", "R", "G", "G", "G", "G"],
     ["G", "T", "R", "R", "G", "R", "G", "G", "G", "G", "G", "R", "R", "G", "G", "G", "R", "T", "R"],
     ["G", "R", "G", "T", "T", "R", "G", "T", "R", "R", "S", "T", "R", "T", "T", "R", "T", "G", "R"],
@@ -49,8 +49,8 @@ function Game() {
 };
 
 var player = new Game();
-var tim = new Hero("Tim", 200, 200);
-
+var tim = new Hero("Tim", 200, 150);
+var lockout = false;
 //Movement controls//
 
 // var leftPos = 576;
@@ -89,12 +89,12 @@ $(".gender").on('click', function () {
 //Mute music button
 $(".music").on('click', function () {
 
-  if ($("audio").prop('muted') === true) {
-    $("audio").prop('muted', false)
+  if ($(".audio-one audio").prop('muted') === true) {
+    $(".audio-one audio").prop('muted', false)
     $(".log").prepend('The birds are singing again.<br><br>')
     $(".music").html("Turn Off Music")
   } else {
-    $("audio").prop('muted', true)
+    $(".audio-one audio").prop('muted', true)
     $(".log").prepend('The forest has fallen strangely silent. . .<br><br>')
     $(".music").html("Turn On Music")
   }
@@ -103,18 +103,14 @@ $(".music").on('click', function () {
 
 //Restart Game Button
 $(".restart").on('click', function () {
-  // player = 0;
-  // player = new Game();
-  // tim = 0;
-  // tim = new Hero();   //hero doesnt reset properly
+
   location.reload();
   var timer = setTimeout(function () {
     updateBoard();
-  $(".log").html('Try again!<br><br>')
+    $(".log").html('Try again!<br><br>')
   }, 300)
- 
-  // if (moveCounter < 0) {
-  // };
+
+
 })
 
 
@@ -194,32 +190,40 @@ function victory() {
   $(".log").prepend('A familiar smell fills your nose as your home comes into view. Dinner must be ready.Hurry!<br><br>')
   $("#" + 4 + "-" + 0).addClass("homeTop");
   $("#" + 5 + "-" + 0).addClass("homeBottom");
-  player.player.x = 1;
+  // player.player.x = 1;
 }
 function realVictory() {
-  $(".log").prepend('Home at Last! Your spouse hugs you enthusiasitcally<br><br>')
-  // $("#" + 3 + "-" + 1).addClass("player male");
+  $(".log").prepend('Home at Last! Your spouse hugs you enthusiastically<br><br><br><br>')
+  lockout = true;
+  $(".audio-one audio").prop('muted', true)
+  $(".audio-two audio").prop('muted', false)
+  $("#" + 3 + "-" + 1).toggleClass(" tile player male");
+  var timer = setTimeout(function () {
+    $(".log").prepend('Thanks for Playing!<br><br>')
+  }, 2000)
 
 }
 
 function fight() {
-  var wizard = new Sorcerer(sorcererNames[getRandomInt(sorcererNames.length)], getRandomInt(250), getRandomInt(200));
+  var wizard = new Sorcerer(sorcererNames[getRandomInt(sorcererNames.length)], 100 + getRandomInt(100), 100 + getRandomInt(100));
   $(".log").prepend('The sorcerer ' + wizard.name + ' eyes you mockingly.<br><br>')
   $('.e-name').html(wizard.name)
   while (tim.health > 0 && wizard.health > 0) {
+    lockout = true;
     wizard.health -= tim.strength;
     tim.health -= wizard.strength;
     if (tim.health <= 0) {
       $(".log").html('You died!<br><br>')
       var timer = setTimeout(function () {
         death();
-      }, 300)
-      
+      }, 700)
+
     }
     else if (wizard.health <= 0) {
       $(".log").prepend('You win!<br><br>')
       var timer = setTimeout(function () {
         player.clearBoard();
+        lockout = false;
       }, 50)
       // updateBoard();
     }
@@ -238,16 +242,15 @@ function magic() {
 }
 function death() {
   $(".log").prepend('You feel dizzy and suddenly the ground comes up to meet your face<br><br>')
-  
+  $("audio").prop('muted', true)
+
   var timer = setTimeout(function () {
     $('body').html('')
-    $('body').css({background:'black'})
-    var timer = setTimeout(function () {
-      $('body').html('')
-      $('body').css({background:'black'})
+    $('body').css({ background: 'black' })
+    var death = setTimeout(function () {
       location.reload();
-    }, 700)
-  }, 700)
+    }, 500)
+  }, 2000)
   // player.player.x= player.player.x;
   // player.player.y=player.player.y;
   // if ($(window).on('keydown')){
@@ -286,10 +289,13 @@ Game.prototype.clearBoard = function () {
 Game.prototype.moveUp = function () {
   $(".player").css({ "background-image": "" });
 
-  if (this.player.y == this.board.length - 1) {
+  if (lockout === true) {
+    return;
+  }
+  else if (this.player.y == 0) {
     cantGo();
   }
-  if (this.board[this.player.y - 1][this.player.x] === "R") {
+  else if (this.board[this.player.y - 1][this.player.x] === "R") {
     cantRock();
   }
   else if (this.board[this.player.y - 1][this.player.x] === "T") {
@@ -312,7 +318,10 @@ Game.prototype.moveUp = function () {
 
 Game.prototype.moveDown = function () {
   $(".player").css({ "background-image": "" });
-  if (this.player.y == 12) {
+  if (lockout === true) {
+    return;
+  }
+  else if (this.player.y == 12) {
     cantGo();
   }
   else if (this.board[this.player.y + 1][this.player.x] === "R") {
@@ -338,12 +347,14 @@ Game.prototype.moveDown = function () {
 
 Game.prototype.moveLeft = function () {
   $(".player").css({ "background-image": "" });
-
-  if (this.player.x == 0) {
+  if (lockout === true) {
+    return;
+  }
+  else if (this.player.x == 0) {
     victory();
 
   }
-  if (this.player.x == 1 && (this.player.y == 5 || this.player.y == 4) &&
+  else if (this.player.x == 1 && (this.player.y == 5 || this.player.y == 4) &&
     $("#" + 4 + "-" + 0).hasClass("homeTop") &&
     $("#" + 5 + "-" + 0).hasClass("homeBottom")) {
     realVictory();
@@ -378,6 +389,9 @@ Game.prototype.moveLeft = function () {
 
 Game.prototype.moveRight = function () {
   $(".player").css({ "background-image": "" });
+  if (lockout === true) {
+    return;
+  }
   if (this.player.x == 18) {
     cantGo();
   }
@@ -434,7 +448,7 @@ function updateBoard() {
         // $(".player").toggleClass("female male");
       }
       if ((player.board[i][j] == "F")) {
-        $("#" + i + "-" + j).addClass("player male"); 
+        $("#" + i + "-" + j).addClass("player male");
         $(".player").toggleClass("female male");
       }
       if (player.board[i][j] == "G") {
