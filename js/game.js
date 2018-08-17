@@ -205,7 +205,7 @@ function realVictory() {
 }
 
 function fight() {
-  var wizard = new Sorcerer(sorcererNames[getRandomInt(sorcererNames.length)], 100 + getRandomInt(100), 100 + getRandomInt(100));
+  var wizard = new Sorcerer(sorcererNames[getRandomInt(sorcererNames.length)], 50 + getRandomInt(100), 50 + getRandomInt(100));
   $(".log").prepend('The sorcerer ' + wizard.name + ' eyes you mockingly.<br><br>')
   $('.e-name').html(wizard.name)
   while (tim.health > 0 && wizard.health > 0) {

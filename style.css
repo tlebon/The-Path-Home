@@ -208,7 +208,10 @@ body{
   background-size: cover;
   /* background-size:120% */
 }
-
+.enemy-info, .player-info{
+  background-image: url("./img/ground-tiles/medievalTile_01.png");
+  padding:7px;
+}
 
 .log{
   width: 608px;
